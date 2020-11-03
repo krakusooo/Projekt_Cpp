@@ -49,15 +49,17 @@ class Database_Klient
     set<contener,comperator>Database;
 set<contener,comperator>::iterator it;
 public:
+   int last_id;
 
    set<contener,comperator>::iterator node;
-   void find_id(int data);
-   void find_name(string data1);
-   void find_surname(string data);
-   void find_password(string data);
-   void find_tel_number(string data);
-   void find_login(string data);
-   void find_Adress(string data);
+   Database_Klient(int id=0){this->last_id=id;}
+   bool find_id(int data);
+   bool find_name(string data1);
+   bool find_surname(string data);
+   bool find_password(string data);
+   bool find_tel_number(string data);
+   bool find_login(string data);
+   bool find_Adress(string data);
    void insert_node(int id,string name,string surname,string password,string tel_number,string login,string Adress);
    void erese_node();
    void save_in_file();
