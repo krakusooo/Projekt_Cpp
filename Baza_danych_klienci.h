@@ -20,13 +20,8 @@ class contener{
     friend class Database_Klient;
     friend class coperator;
     public:
-   void set_name(string name){this->name=name;}
-   void set_surname(string surname){this->surname=surname;}
-   void set_password(string password){this->password=password;}
-   void set_tel_number(string tel_number){this->tel_number=tel_number;}
-   void set_login(string login){this->login=login;}
-   void set_Adress(string Adress){this->Adress=Adress;}
 
+   int get_id()const{return id;}
    string get_name()const {return name;}
    string get_surname()const{return surname;}
    string get_password()const{return password;}
@@ -50,7 +45,6 @@ class Database_Klient
 set<contener,comperator>::iterator it;
 public:
    int last_id;
-
    set<contener,comperator>::iterator node;
    Database_Klient(int id=0){this->last_id=id;}
    bool find_id(int data);
@@ -63,7 +57,15 @@ public:
    void insert_node(int id,string name,string surname,string password,string tel_number,string login,string Adress);
    void erese_node();
    void save_in_file();
-   void load_from_file();
+   bool load_from_file();
+
+   void set_name(string data);
+   void set_surname(string data);
+   void set_password(string data);
+   void set_tel_number(string data);
+   void set_login(string data);
+   void set_Adress(string data);
+
 };
 
 #endif // BAZA_DANYCH_KLIENCI_H_INCLUDED

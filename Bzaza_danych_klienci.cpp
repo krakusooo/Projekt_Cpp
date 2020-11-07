@@ -16,63 +16,93 @@ contener::contener(int id,string name,string surname,string password,string tel_
 }
 void Database_Klient::insert_node(int id,string name,string surname,string password,string tel_number,string login,string Adress){
   contener new_node(id,name,surname,password,tel_number,login,Adress);
-  last_id++;
+ last_id++;
   Database.insert(new_node);
   node=Database.begin();
 }
 bool Database_Klient::find_id(int data)
-{bool check=false;
-for(it=Database.begin();it!=Database.end();++it){
+{
+bool check=false;
 
-    if(data==it->id){
-        node=it;
-        check=true;}
-}
+    for(it=Database.begin();it!=Database.end();it++)
+        if(data==it->id){
+            node=it;
+            check=true;
+            }
 
-        return check;
-
+    return check;
 }
 bool Database_Klient::find_name(string data)
-{bool check=false;
+{
+bool check=false;
+
     for(it=Database.begin();it!=Database.end();it++)
-    if(data==it->name){
-        node=it;check=true;}
-return check;
+        if(data==it->name){
+            node=it;
+            check=true;
+            }
+
+    return check;
 }
 bool Database_Klient::find_surname(string data)
-{bool check=false;
-    for(it=Database.begin();it!=Database.end();it++){
-    if(data==it->surname)
-        node=it;check=true;}
-return check;
+{
+bool check=false;
+
+    for(it=Database.begin();it!=Database.end();it++)
+        if(data==it->surname){
+            node=it;
+            check=true;
+            }
+
+    return check;
 }
 bool Database_Klient::find_password(string data)
-{bool check=false;
+{
+bool check=false;
+
     for(it=Database.begin();it!=Database.end();it++)
-    if(data==it->password){
-        node=it;check=true;}
-return check;
+        if(data==it->password){
+            node=it;
+            check=true;
+            }
+
+    return check;
 }
 bool Database_Klient::find_tel_number(string data)
-{bool check=false;
+{
+bool check=false;
+
     for(it=Database.begin();it!=Database.end();it++)
-    if(data==it->tel_number){
-        node=it;check=true;}
-return check;
+        if(data==it->tel_number){
+            node=it;
+            check=true;
+            }
+    return check;
 }
 bool Database_Klient::find_login(string data)
-{bool check=false;
+{
+bool check=false;
+
     for(it=Database.begin();it!=Database.end();it++)
-    if(data==it->login){
-        node=it;check=true;}
-return check;
+        if(data==it->login){
+            node=it;
+            check=true;
+            }
+
+    return check;
 }
 bool Database_Klient::find_Adress(string data)
-{bool check=false;
+{
+bool check=false;
+
     for(it=Database.begin();it!=Database.end();it++)
-    if(data==it->Adress){
-        node=it;check=true;}
-return check;
+        if(data==it->Adress)
+            {
+            node=it;
+            check=true;
+            }
+
+    return check;
 }
 void Database_Klient::save_in_file()
 {
@@ -84,7 +114,7 @@ void Database_Klient::save_in_file()
     database_klient.close();
 
 }
-void Database_Klient::load_from_file()
+bool Database_Klient::load_from_file()
 {
     int id;
     string name;
@@ -94,6 +124,7 @@ void Database_Klient::load_from_file()
     string login;
     string Adress;
     database_klient.open("database_klient.txt", ios::in );
+    if(database_klient.good()!=false){
     while(!database_klient.eof())
     {
         database_klient>>id;
@@ -108,29 +139,104 @@ void Database_Klient::load_from_file()
     }
 
     database_klient.close();
+    return true;
+    }
+    else
+        return false;
 }
 void Database_Klient::erese_node()
 {
     Database.erase(node);
     node=Database.begin();
 }
-int main()
+void Database_Klient::set_name(string data)
 {
-    Database_Klient new_database;
-    new_database.load_from_file();
-   /* new_database.insert_node(1,"Karol","kot","1234","7788443","lothar","Paderewskiego");
-    new_database.insert_node(2,"Patryk","marek","1234","7788443","mare@gmail.com","Paderewskiego");
-    new_database.insert_node(3,"marol","Waldek","1234","7788443","kark.tu.kielce.pl","Paderewskiego");
-    new_database.insert_node(4,"Patrycja","west","1234","7788443","Wartka@dm.com","Warszawska");*/
-    if (new_database.find_id(1)==true)
-        cout<<"true"<<endl;
-    else
-        cout<<"false"<<endl;
-    //new_database.erese_node();
+    int id=node->get_id();
+    string name=data;
+    string surname=node->get_surname();
+    string password=node->get_password();
+    string tel_number=node->get_tel_number();
+    string login=node->get_login();
+    string Adress=node->get_Adress();
 
-//    new_database.node=new_database.Database.begin();
- //  std:: string name=new_database.node->get_name();
-   //cout<<"cos: "<<name;
-    //new_database.save_in_file();
-    return 0;
+    erese_node();
+    insert_node(id,name,surname,password,tel_number,login,Adress);
+    find_id(id);
+
 }
+void Database_Klient::set_surname(string data)
+{
+    int id=node->get_id();
+    string name=node->get_name();
+    string surname=data;
+    string password=node->get_password();
+    string tel_number=node->get_tel_number();
+    string login=node->get_login();
+    string Adress=node->get_Adress();
+
+    erese_node();
+    insert_node(id,name,surname,password,tel_number,login,Adress);
+    find_id(id);
+
+}
+void Database_Klient::set_password(string data)
+{
+    int id=node->get_id();
+    string name=data;
+    string surname=node->get_surname();
+    string password=node->get_password();
+    string tel_number=node->get_tel_number();
+    string login=node->get_login();
+    string Adress=node->get_Adress();
+
+    erese_node();
+    insert_node(id,name,surname,password,tel_number,login,Adress);
+    find_id(id);
+
+}
+void Database_Klient::set_tel_number(string data)
+{
+    int id=node->get_id();
+    string name=node->get_name();
+    string surname=node->get_surname();
+    string password=node->get_password();
+    string tel_number=data;
+    string login=node->get_login();
+    string Adress=node->get_Adress();
+
+    erese_node();
+    insert_node(id,name,surname,password,tel_number,login,Adress);
+    find_id(id);
+
+}
+void Database_Klient::set_login(string data)
+{
+    int id=node->get_id();
+    string name=node->get_name();
+    string surname=node->get_surname();
+    string password=node->get_password();
+    string tel_number=node->get_tel_number();
+    string login=data;
+    string Adress=node->get_Adress();
+
+    erese_node();
+    insert_node(id,name,surname,password,tel_number,login,Adress);
+    find_id(id);
+
+}
+void Database_Klient::set_Adress(string data)
+{
+    int id=node->get_id();
+    string name=node->get_name();
+    string surname=node->get_surname();
+    string password=node->get_password();
+    string tel_number=node->get_tel_number();
+    string login=node->get_login();
+    string Adress=data;
+
+    erese_node();
+    insert_node(id,name,surname,password,tel_number,login,Adress);
+    find_id(id);
+
+}
+
