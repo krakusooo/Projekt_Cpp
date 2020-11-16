@@ -1,311 +1,229 @@
-#include<iostream>
+#include <iostream>
 #include <windows.h>
-#include"Baza_danych_klienci.h"
+#include "Baza_asortymentu.h"
 #include <fstream>
 #include <string>
+
 using namespace std;
-contener::contener(int id,string name,string surname,string password,string tel_number,string login,string Adress_Ul,string Adress_Hous_N,string Adress_local_N)
-{
-  this->id=id;
-  this->name=name;
-  this->surname=surname;
-  this->password=password;
-  this->tel_number=tel_number;
-  this->login=login;
-  this->Adress_Ul=Adress_Ul;
-  this->Adress_Hous_N=Adress_Hous_N;
-  this->Adress_local_N=Adress_local_N;
+
+Assortment::Assortment(int id, string film_title, string film_type, int production_year, string director, float price_per_day, float price_per_week) {
+    this->id = id;
+    this->film_title = film_title;
+    this->film_type = film_type;
+    this->production_year = production_year;
+    this->director = director;
+    this->price_per_day = price_per_day;
+    this->price_per_week = price_per_week;
 }
-void Database_Klient::insert_node(int id,string name,string surname,string password,string tel_number,string login,string Adress_Ul,string Adress_Hous_N,string Adress_local_N){
-  last_id++;
-  contener new_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_Hous_N,Adress_local_N);
 
-  Database.insert(new_node);
-  node=  Database.begin();
+void DatabaseAssortment::insertNode(int id, string film_title, string film_type, int production_year, string director, float price_per_day, float price_per_week) {
+    last_id++;
+    Assortment newNode(id, film_title, film_type, production_year, director, price_per_day, price_per_week);
+    
+    Database.insert(new_node);
+    node = Database.begin();
 }
-bool Database_Klient::find_id(int data)
-{
-bool check=false;
 
-    for(it=Database.begin();it!=Database.end();it++)
-        if(data==it->id){
-            node=it;
-            check=true;
-            }
-
-    return check;
-}
-bool Database_Klient::find_name(string data)
-{
-bool check=false;
-
-    for(it=Database.begin();it!=Database.end();it++)
-        if(data==it->name){
-            node=it;
-            check=true;
-            }
-
-    return check;
-}
-bool Database_Klient::find_surname(string data)
-{
-bool check=false;
-
-    for(it=Database.begin();it!=Database.end();it++)
-        if(data==it->surname){
-            node=it;
-            check=true;
-            }
-
-    return check;
-}
-bool Database_Klient::find_password(string data)
-{
-bool check=false;
-
-    for(it=Database.begin();it!=Database.end();it++)
-        if(data==it->password){
-            node=it;
-            check=true;
-            }
-
-    return check;
-}
-bool Database_Klient::find_tel_number(string data)
-{
-bool check=false;
-
-    for(it=Database.begin();it!=Database.end();it++)
-        if(data==it->tel_number){
-            node=it;
-            check=true;
-            }
-    return check;
-}
-bool Database_Klient::find_login(string data)
-{
-bool check=false;
-
-    for(it=Database.begin();it!=Database.end();it++)
-        if(data==it->login){
-            node=it;
-            check=true;
-            }
-
-    return check;
-}
-bool Database_Klient::find_Adress_Ul(string data)
-{bool check=false;
-    for(it=Database.begin();it!=Database.end();it++)
-    if(data==it->Adress_Ul){
-        node=it;
-        check=true;
-    }
-    return check;
-}
-bool Database_Klient::find_Adress_house_N(string data)
-{bool check=false;
-    for(it=Database.begin();it!=Database.end();it++)
-    if(data==it->Adress_Hous_N){
-        node=it;
-        check=true;
-    }
-    return check;
-}
-bool Database_Klient::find_Adress_local_N(string data)
-{bool check=false;
-    for(it=Database.begin();it!=Database.end();it++)
-    if(data==it->Adress_local_N){
-        node=it;
-        check=true;
-    }
-    return check;
-}
-void Database_Klient::save_in_file()
-{
-    database_klient.open("database_klient.txt",ios::out);
-    for(it=Database.begin();it!=Database.end();it++){
-        database_klient<<it->id<<"   "<<it->name<<"   "<<it->surname
-        <<"   "<<it->password<<"    "<<it->login<<"   "<<it->Adress_Ul<<"   "<<it->Adress_Hous_N<<"   "<<it->Adress_local_N
-        <<"   "<<it->tel_number<<endl;}
-    database_klient.close();
-
-}
-bool Database_Klient::load_from_file()
-{
-    int id;
-    string name;
-    string surname;
-    string password;
-    string tel_number;
-    string login;
-    string Adress_Ul;
-    string Adress_Hous_N;
-    string Adress_local_N;
-    database_klient.open("database_klient.txt", ios::in );
-    if(database_klient.good()!=false){
-        while(!database_klient.eof())
-        {
-            database_klient>>id;
-            database_klient>>name;
-            database_klient>>surname;
-            database_klient>>password;
-            database_klient>>login;
-            database_klient>>Adress_Ul;
-            database_klient>>Adress_Hous_N;
-            database_klient>>Adress_local_N;
-            database_klient>>tel_number;
-
-            insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_Hous_N,Adress_local_N);
-
+bool DatabaseAssortment::findId(int data) {
+    bool check = false;
+    for (it = Database.begin(); it != Database.end(); it++) {
+        if (data == it -> id) {
+            node = it;
+            check = true;
         }
-
-        database_klient.close();
-        return true;
     }
-    else return false;
+    return check;
 }
-void Database_Klient::erese_node()
-{
+
+bool DatabaseAssortment::findFilmTitle(string data) {
+    bool check = false;
+    for (it = Database.begin(); it != Database.end(); it++) {
+        if (data == it -> film_title) {
+            node = it;
+            check = true;
+        }
+    }
+    return check;
+}
+
+bool DatabaseAssortment::findFilmtype(string data) {
+    bool check = false;
+    for (it = Database.begin(); it != Database.end(); it++) {
+        if (data == it -> film_type) {
+            node = it;
+            check = true;
+        }
+    }
+    return check;
+}
+
+bool DatabaseAssortment::findProductionYear(int data) {
+    bool check = false;
+    for (it = Database.begin(); it != Database.end(); it++) {
+        if (data == it -> production_year) {
+            node = it;
+            check = true;
+        }
+    }
+    return check;
+}
+
+bool DatabaseAssortment::findDirector(string data) {
+    bool check = false;
+    for (it = Database.begin(); it != Database.end(); it++) {
+        if (data == it -> director) {
+            node = it;
+            check = true;
+        }
+    }
+    return check;
+}
+
+bool DatabaseAssortment::findPricePerDay(float data) {
+    bool check = false;
+    for (it = Database.begin(); it != Database.end(); it++) {
+        if (data == it -> price_per_day) {
+            node = it;
+            check = true;
+        }
+    }
+    return check;
+}
+
+bool DatabaseAssortment::findPricePerWeek(float data) {
+    bool check = false;
+    for (it = Database.begin(); it != Database.end(); it++) {
+        if (data == it -> price_per_week) {
+            node = it;
+        }
+    }
+    return check;
+}
+
+void DatabaseAssortment::saveInFile() {
+    databaseassortment.open("database_assortment.txt", ios::out);
+    for (it = Database.begin(); it != Database.end(); it++) {
+        databaseassortment << it->id << "   " << it->film_title <<
+        "   " << it->film_type << "   " << it->production_year << 
+        "   " << it->director << "   " << it->price_per_day << 
+        "   " << it->price_per_week << endl;
+    }
+    databaseassortment.close();
+}
+
+bool DatabaseAssortment::loadFromFile() {
+    int id;
+    string film_title;
+    string film_type;
+    int production_year;
+    string director;
+    float price_per_day;
+    float price_per_week;
+    databaseassortment.open("database_assortment.txt", ios::in);
+    if(databaseassortment.good() != false) {
+        while (!databaseassortment.eof()) {
+            databaseassortment >> id;
+            databaseassortment >> film_title;
+            databaseassortment >> film_type;
+            databaseassortment >> production_year;
+            databaseassortment >> director;
+            databaseassortment >> price_per_day;
+            databaseassortment >> price_per_week;
+
+            insertNode(id, film_title, film_type, production_year, director, price_per_day, price_per_week);
+        }
+        databaseassortment.close();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void DatabaseAssortment::eraseNode() {
     Database.erase(node);
-    node=Database.begin();
+    node = Database.begin();
 }
-void Database_Klient::set_name(string data)
-{
-    int id=node->get_id();
-    string name=data;
-    string surname=node->get_surname();
-    string password=node->get_password();
-    string tel_number=node->get_tel_number();
-    string login=node->get_login();
-    string Adress_Ul=node->get_Adress_Ul();
-    string Adress_hous_N=node->get_Adress_Hous_N();
-    string Adress_local_N=node->get_Adress_local_N();
 
-    erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
-    find_id(id);
+void DatabaseAssortment::setFilmtTitle(string data) {
+    int id = node -> getId();
+    string film_title = data;
+    string film_type = node -> getFilmtype();
+    int production_year = node -> getProductionYear();
+    string director = node -> getDirector();
+    float price_per_day = node -> getPricePerDay();
+    float price_per_week = node -> getPricePerWeek();
 
+    eraseNode();
+    insertNode(id, film_title, film_type, production_year, director, price_per_day, price_per_week);
+    findId(id);
 }
-void Database_Klient::set_surname(string data)
-{
-    int id=node->get_id();
-    string name=node->get_name();
-    string surname=data;
-    string password=node->get_password();
-    string tel_number=node->get_tel_number();
-    string login=node->get_login();
-    string Adress_Ul=node->get_Adress_Ul();
-    string Adress_hous_N=node->get_Adress_Hous_N();
-    string Adress_local_N=node->get_Adress_local_N();
 
-    erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
-    find_id(id);
+void DatabaseAssortment::setFilmType(string data) {
+    int id = node -> getId();
+    string film_title = node -> getFilmTitle();
+    string film_type = data;
+    int production_year = node -> getProductionYear();
+    string director = node -> getDirector();
+    float price_per_day = node -> getPricePerDay();
+    float price_per_week = node -> getPricePerWeek();
 
+    eraseNode();
+    insertNode(id, film_title, film_type, production_year, director, price_per_day, price_per_week);
+    findId(id);
 }
-void Database_Klient::set_password(string data)
-{
-    int id=node->get_id();
-    string name=data;
-    string surname=node->get_surname();
-    string password=node->get_password();
-    string tel_number=node->get_tel_number();
-    string login=node->get_login();
-     string Adress_Ul=node->get_Adress_Ul();
-    string Adress_hous_N=node->get_Adress_Hous_N();
-    string Adress_local_N=node->get_Adress_local_N();
 
-    erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
-    find_id(id);
+void DatabaseAssortment::setProductionYear(int data) {
+    int id = node -> getId();
+    string film_title = node -> getFilmTitle();
+    string film_type = node -> getFilmtype();
+    int production_year = data;
+    string director = node -> getDirector();
+    float price_per_day = node -> getPricePerDay();
+    float price_per_week = node -> getPricePerWeek();
 
+    eraseNode();
+    insertNode(id, film_title, film_type, production_year, director, price_per_day, price_per_week);
+    findId(id);
 }
-void Database_Klient::set_tel_number(string data)
-{
-    int id=node->get_id();
-    string name=node->get_name();
-    string surname=node->get_surname();
-    string password=node->get_password();
-    string tel_number=data;
-    string login=node->get_login();
-      string Adress_Ul=node->get_Adress_Ul();
-    string Adress_hous_N=node->get_Adress_Hous_N();
-    string Adress_local_N=node->get_Adress_local_N();
 
-    erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
-    find_id(id);
+void DatabaseAssortment::setDirector(string data) {
+    int id = node -> getId();
+    string film_title = node -> getFilmTitle();
+    string film_type = node -> getFilmtype();
+    int production_year = node -> getProductionYear();
+    string director = data;
+    float price_per_day = node -> getPricePerDay();
+    float price_per_week = node -> getPricePerWeek();
 
+    eraseNode();
+    insertNode(id, film_title, film_type, production_year, director, price_per_day, price_per_week);
+    findId(id);
 }
-void Database_Klient::set_login(string data)
-{
-    int id=node->get_id();
-    string name=node->get_name();
-    string surname=node->get_surname();
-    string password=node->get_password();
-    string tel_number=node->get_tel_number();
-    string login=data;
-     string Adress_Ul=node->get_Adress_Ul();
-    string Adress_hous_N=node->get_Adress_Hous_N();
-    string Adress_local_N=node->get_Adress_local_N();
 
-    erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
-    find_id(id);
+void DatabaseAssortment::setPricePerDay(float data) {
+    int id = node -> getId();
+    string film_title = node -> getFilmTitle();
+    string film_type = node -> getFilmtype();
+    int production_year = node -> getProductionYear();
+    string director = data -> getDirector();
+    float price_per_day = data;
+    float price_per_week = node -> getPricePerWeek();
 
+    eraseNode();
+    insertNode(id, film_title, film_type, production_year, director, price_per_day, price_per_week);
+    findId(id);
 }
-void Database_Klient::set_Adress_UL(string data)
-{
-    int id=node->get_id();
-    string name=node->get_name();
-    string surname=node->get_surname();
-    string password=node->get_password();
-    string tel_number=node->get_tel_number();
-    string login=node->get_login();
-    string Adress_Ul=data;
-    string Adress_hous_N=node->get_Adress_Hous_N();
-    string Adress_local_N=node->get_Adress_local_N();
 
+void DatabaseAssortment::setPricePerWeek(float data) {
+    int id = node -> getId();
+    string film_title = node -> getFilmTitle();
+    string film_type = node -> getFilmtype();
+    int production_year = node -> getProductionYear();
+    string director = data -> getDirector();
+    float price_per_day = node -> getPricePerDay();
+    float price_per_week = data;
 
-    erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
-    find_id(id);
-
-}
-void Database_Klient::set_Adress_house_N(string data)
-{
-    int id=node->get_id();
-    string name=node->get_name();
-    string surname=node->get_surname();
-    string password=node->get_password();
-    string tel_number=node->get_tel_number();
-    string login=node->get_login();
-    string Adress_Ul=node->get_Adress_Ul();
-    string Adress_hous_N=data;
-    string Adress_local_N=node->get_Adress_local_N();
-
-
-    erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
-    find_id(id);
-
-}
-void Database_Klient::set_Adress_local_N(string data)
-{
-    int id=node->get_id();
-    string name=node->get_name();
-    string surname=node->get_surname();
-    string password=node->get_password();
-    string tel_number=node->get_tel_number();
-    string login=node->get_login();
-    string Adress_Ul=node->get_Adress_Ul();
-    string Adress_hous_N=node->get_Adress_Hous_N();
-    string Adress_local_N=data;
-
-
-    erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
-    find_id(id);
-
+    eraseNode();
+    insertNode(id, film_title, film_type, production_year, director, price_per_day, price_per_week);
+    findId(id);
 }
