@@ -1,0 +1,10 @@
+1   Zielona_Mila   Dramat   1999   Frank_Darabont    6.50   30
+2   Forrest_Gump   Dramat   1994   Robert_Zemeckis   6   28
+3   Matrix   Sci_Fi   1999   Lilly_Wachowski   7   32
+4   Gladiator   Dramat_historyczny   2000   Ridley_Scott   7   32
+5   Szeregowiec_Ryan   Wojenny   1998   Steven_Spierlberg   6.50   30
+6   Titanic   Melodramat   1997   James_Cameron   7   32
+7   Ojciec_Chrzestny   Dramat   1972   Francis_Ford_Coppola   6.50   30
+8   Incepcja   Thiller   2010   Christoper_Nolan   6.50   30
+9   Kod_da_Vinci   Thiller   2006   Ron_Howard   6   28
+10   Mroczny_Rycerz   Akcja   2008   Christoper_Nolan   7   32
