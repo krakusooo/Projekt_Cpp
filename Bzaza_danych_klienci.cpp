@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
-contener::contener(int id,string name,string surname,string password,string tel_number,string login,string Adress_Ul,string Adress_Hous_N,string Adress_local_N)
+contener::contener(int id,string name,string surname,string password,string tel_number,string login,string Adress_Ul,string Adress_Hous_N,string Adress_local_N,string city)
 {
   this->id=id;
   this->name=name;
@@ -15,10 +15,11 @@ contener::contener(int id,string name,string surname,string password,string tel_
   this->Adress_Ul=Adress_Ul;
   this->Adress_Hous_N=Adress_Hous_N;
   this->Adress_local_N=Adress_local_N;
+  this->city=city;
 }
-void Database_Klient::insert_node(int id,string name,string surname,string password,string tel_number,string login,string Adress_Ul,string Adress_Hous_N,string Adress_local_N){
-  last_id++;
-  contener new_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_Hous_N,Adress_local_N);
+void Database_Klient::insert_node(int id,string name,string surname,string password,string tel_number,string login,string Adress_Ul,string Adress_Hous_N,string Adress_local_N,string city){
+  last_id=id;
+  contener new_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_Hous_N,Adress_local_N,city);
 
   Database.insert(new_node);
   node=  Database.begin();
@@ -127,12 +128,13 @@ void Database_Klient::save_in_file()
     for(it=Database.begin();it!=Database.end();it++){
         database_klient<<it->id<<"   "<<it->name<<"   "<<it->surname
         <<"   "<<it->password<<"    "<<it->login<<"   "<<it->Adress_Ul<<"   "<<it->Adress_Hous_N<<"   "<<it->Adress_local_N
-        <<"   "<<it->tel_number<<endl;}
+        <<"   "<<it->tel_number<<"   "<<it->city <<endl;}
     database_klient.close();
 
 }
 bool Database_Klient::load_from_file()
-{
+{  bool check=false;
+
     int id;
     string name;
     string surname;
@@ -142,26 +144,49 @@ bool Database_Klient::load_from_file()
     string Adress_Ul;
     string Adress_Hous_N;
     string Adress_local_N;
+    string city;
     database_klient.open("database_klient.txt", ios::in );
     if(database_klient.good()!=false){
     while(!database_klient.eof())
-    {
+    {    if(database_klient.eof())
+            check=true;
         database_klient>>id;
+         if(database_klient.eof())
+            check=true;
         database_klient>>name;
+        if(database_klient.eof())
+            check=true;
         database_klient>>surname;
+        if(database_klient.eof())
+            check=true;
         database_klient>>password;
+        if(database_klient.eof())
+            check=true;
         database_klient>>login;
+        if(database_klient.eof())
+            check=true;
         database_klient>>Adress_Ul;
+        if(database_klient.eof())
+            check=true;
         database_klient>>Adress_Hous_N;
+        if(database_klient.eof())
+            check=true;
         database_klient>>Adress_local_N;
+        if(database_klient.eof())
+            check=true;
         database_klient>>tel_number;
-
-        insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_Hous_N,Adress_local_N);
+        if(database_klient.eof())
+            check=true;
+            database_klient>>city;
+        if(check!=true)
+        insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_Hous_N,Adress_local_N,city);
 
     }
 
     database_klient.close();
+
     return true;
+
     }
     else return false;
 }
@@ -172,6 +197,7 @@ void Database_Klient::erese_node()
 }
 void Database_Klient::set_name(string data)
 {
+    int tmp=last_id;
     int id=node->get_id();
     string name=data;
     string surname=node->get_surname();
@@ -181,14 +207,14 @@ void Database_Klient::set_name(string data)
     string Adress_Ul=node->get_Adress_Ul();
     string Adress_hous_N=node->get_Adress_Hous_N();
     string Adress_local_N=node->get_Adress_local_N();
-
+    string city= node->get_City();
     erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
+    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N,city);
     find_id(id);
-
+    last_id=tmp;
 }
 void Database_Klient::set_surname(string data)
-{
+{   int tmp=last_id;
     int id=node->get_id();
     string name=node->get_name();
     string surname=data;
@@ -198,31 +224,31 @@ void Database_Klient::set_surname(string data)
     string Adress_Ul=node->get_Adress_Ul();
     string Adress_hous_N=node->get_Adress_Hous_N();
     string Adress_local_N=node->get_Adress_local_N();
-
+    string city= node->get_City();
     erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
+    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N,city);
     find_id(id);
-
+    last_id=tmp;
 }
 void Database_Klient::set_password(string data)
-{
+{   int tmp=last_id;
     int id=node->get_id();
-    string name=data;
+    string name=node->get_name();
     string surname=node->get_surname();
-    string password=node->get_password();
+    string password=data;
     string tel_number=node->get_tel_number();
     string login=node->get_login();
      string Adress_Ul=node->get_Adress_Ul();
     string Adress_hous_N=node->get_Adress_Hous_N();
     string Adress_local_N=node->get_Adress_local_N();
-
+    string city= node->get_City();
     erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
+    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N,city);
     find_id(id);
-
+    last_id=tmp;
 }
 void Database_Klient::set_tel_number(string data)
-{
+{   int tmp=last_id;
     int id=node->get_id();
     string name=node->get_name();
     string surname=node->get_surname();
@@ -232,14 +258,14 @@ void Database_Klient::set_tel_number(string data)
       string Adress_Ul=node->get_Adress_Ul();
     string Adress_hous_N=node->get_Adress_Hous_N();
     string Adress_local_N=node->get_Adress_local_N();
-
+    string city= node->get_City();
     erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
+    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N,city);
     find_id(id);
-
+    last_id=tmp;
 }
 void Database_Klient::set_login(string data)
-{
+{    int tmp=last_id;
     int id=node->get_id();
     string name=node->get_name();
     string surname=node->get_surname();
@@ -249,14 +275,14 @@ void Database_Klient::set_login(string data)
      string Adress_Ul=node->get_Adress_Ul();
     string Adress_hous_N=node->get_Adress_Hous_N();
     string Adress_local_N=node->get_Adress_local_N();
-
+    string city= node->get_City();
     erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
+    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N,city);
     find_id(id);
-
+    last_id=tmp;
 }
 void Database_Klient::set_Adress_UL(string data)
-{
+{   int tmp=last_id;
     int id=node->get_id();
     string name=node->get_name();
     string surname=node->get_surname();
@@ -266,15 +292,15 @@ void Database_Klient::set_Adress_UL(string data)
     string Adress_Ul=data;
     string Adress_hous_N=node->get_Adress_Hous_N();
     string Adress_local_N=node->get_Adress_local_N();
-
+    string city= node->get_City();
 
     erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
+    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N,city);
     find_id(id);
-
+    last_id=tmp;
 }
 void Database_Klient::set_Adress_house_N(string data)
-{
+{   int tmp=last_id;
     int id=node->get_id();
     string name=node->get_name();
     string surname=node->get_surname();
@@ -284,15 +310,15 @@ void Database_Klient::set_Adress_house_N(string data)
     string Adress_Ul=node->get_Adress_Ul();
     string Adress_hous_N=data;
     string Adress_local_N=node->get_Adress_local_N();
-
+    string city= node->get_City();
 
     erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
+    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N,city);
     find_id(id);
-
+    last_id=tmp;
 }
 void Database_Klient::set_Adress_local_N(string data)
-{
+{   int tmp=last_id;
     int id=node->get_id();
     string name=node->get_name();
     string surname=node->get_surname();
@@ -302,10 +328,10 @@ void Database_Klient::set_Adress_local_N(string data)
     string Adress_Ul=node->get_Adress_Ul();
     string Adress_hous_N=node->get_Adress_Hous_N();
     string Adress_local_N=data;
-
+    string city= node->get_City();
 
     erese_node();
-    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N);
+    insert_node(id,name,surname,password,tel_number,login,Adress_Ul,Adress_hous_N,Adress_local_N,city);
     find_id(id);
-
+    last_id=tmp;
 }

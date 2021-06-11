@@ -13,13 +13,14 @@ class contener{
     string surname;
     string password;
     string tel_number;
+    string city;
     string login;
     string Adress_Ul;
     string Adress_Hous_N;
     string Adress_local_N;
 
 
-    contener(int=0,string=" ",string=" ",string=" ",string=" ",string=" ",string=" ",string=" ",string=" ");
+    contener(int=0,string=" ",string=" ",string=" ",string=" ",string=" ",string=" ",string=" ",string=" ",string="");
     friend class Database_Klient;
     friend class coperator;
     public:
@@ -35,6 +36,7 @@ class contener{
    string get_Adress_Ul()const{return Adress_Ul;}
    string get_Adress_Hous_N()const{return Adress_Hous_N;}
    string get_Adress_local_N()const{return Adress_local_N;}
+   string get_City()const{return city;}
 
 
   // bool operator< (const contener& rhs)const {return id>rhs.id;}
@@ -56,6 +58,12 @@ public:
     set<contener,comperator>::iterator node;
    Database_Klient(int id=0){this->last_id=id;}
 
+   bool Is_empty(){
+   if(!Database.empty())
+    return false;//ieœli nie jest pusta
+   else
+    return true;//ieœli jest pusta
+   }
    bool find_id(int data);
    bool find_name(string data1);
    bool find_surname(string data);
@@ -65,7 +73,7 @@ public:
    bool find_Adress_Ul(string data);
    bool find_Adress_house_N(string data);
    bool find_Adress_local_N(string data);
-   void insert_node(int id,string name,string surname,string password,string tel_number,string login,string Adress_Ul,string Adress_Hous_N,string Adress_local_N);
+   void insert_node(int id,string name,string surname,string password,string tel_number,string login,string Adress_Ul,string Adress_Hous_N,string Adress_local_N,string city);
    void erese_node();
    void save_in_file();
    bool load_from_file();

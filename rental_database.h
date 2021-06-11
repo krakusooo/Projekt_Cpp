@@ -13,19 +13,19 @@ class Relant_database_node
     int id_zamowienia;
     int id_klienta;
     int id_filmu;
-    int data_wypoz;
-    int data_zwrotu;
+    string  data_wypoz;
+    string data_zwrotu;
 
 public:
-    Relant_database_node(int=0,int=0,int=0,int=0,int=0);
+    Relant_database_node(int=0,int=0,int=0,string="",string="");
     friend class comperor;
     friend class Database_relent;
 
     int get_id_zamowienia()const{return id_zamowienia;}
     int get_id_klienta()const{return id_klienta;}
     int get_id_filmu()const{return id_filmu;}
-    int get_data_wypoz()const{return data_wypoz;}
-    int get_data_zwrotu()const{return data_zwrotu;}
+    string get_data_wypoz()const{return data_wypoz;}
+    string get_data_zwrotu()const{return data_zwrotu;}
 
 };
 struct comperor{
@@ -46,9 +46,9 @@ public:
     bool find_id_zamowienia(int data);
     bool find_id_klienta(int data);
     bool find_id_filmu(int data);
-    bool find_data_wypoz(int data);
-    bool find_data_zwrotu(int data);
-    void insert_node(int id_z,int id_k,int id_f,int data_wyp,int data_zw);
+    bool find_data_wypoz(string data);
+    bool find_data_zwrotu(string data);
+    void insert_node(int id_z,int id_k,int id_f,string data_wyp,string data_zw);
     void erse_node();
     bool load_from_file();
     void seve_to_file();
@@ -56,8 +56,8 @@ public:
 
     void set_id_klienta(int data);
     void set_id_filmu(int data);
-    void set_data_wypoz(int data);
-    void set_data_zwrotu(int data);
+    void set_data_wypoz(string data);
+    void set_data_zwrotu(string data);
 
 
 };

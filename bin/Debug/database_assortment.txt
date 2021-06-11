@@ -1,0 +1,4 @@
+1   Zielona_mila   Dramat   1999   Frank_Darabont   1.25   1.1   1
+2   Skazani_na_Shawshank   Dramat   1994   Frank_Darabont   1.25   1.1   0
+3   Leon_Zawodowiec   Kryminał   1994   Luc_Besson   1.35   1.2   0
+5   Zielona_mila   Dramat   1999   Frank_Darabont   1.25   1.1   0
